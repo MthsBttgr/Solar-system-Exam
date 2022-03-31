@@ -12,6 +12,9 @@ let mom = [];
 //setting up scale variable which is used for zooming in and out
 let scale = 1;
 
+//setting up the width of the sidebar
+let sidebarW = 230
+
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -31,10 +34,10 @@ function setup() {
       y: 90 - 12 * s
     }
   }
-
   mom[0].y = 0
 
   //creating all the planets in the solar system and adding them to the planets-array
+  {
   planets.push(new Planet(10000, 70, p[0], mom[0], color(255, 214, 10), 'sun'))
   planets.push(new Planet(10, 10, p[1], mom[1], color(random(255), random(255), random(255)),'merkury'))  
   planets.push(new Planet(10, 10, p[2], mom[2], color(random(255), random(255), random(255)),'venus'))
@@ -44,15 +47,18 @@ function setup() {
   planets.push(new Planet(10, 10, p[6], mom[6], color(random(255), random(255), random(255)),'saturn'))
   planets.push(new Planet(10, 10, p[7], mom[7], color(random(255), random(255), random(255)),'uranus'))
   planets.push(new Planet(10, 10, p[8], mom[8], color(random(255), random(255), random(255)),'neptune'))
-
+  }
 }
 
 function draw() 
 {
   background(0);
 
+  //makes a zone where i change the settings, when displaying the planets and calculating stuff
+  push()
+
   //making sure the center of the canvas is always at the center of the screen
-  translate(width/2, height/2)
+  translate((width- sidebarW)/2, height/2)
 
   // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
   for (i = 0; i <= 8; i++)
@@ -91,61 +97,9 @@ function draw()
   {
     planets[s].showPlanet(p[s], scale)
   }
-}
+  pop()
 
-// calculates the force of gravity excuded on one body from another
-function gravity(p1, p2, mass1, mass2)
-{
-  let r = {x: p1.x - p2.x, y: p1.y - p2.y}
-  let distr = sqrt(pow(r.x,2) + pow(r.y,2))
-  let rHat = {x: r.x / distr, y: r.y / distr}
-  
-  let Fg = -G * (mass1 * mass2) / pow(distr, 2)
+  fill(50)
+  rect(width - sidebarW, 0, sidebarW, height)
 
-  let F = {x: Fg * rHat.x, y: Fg * rHat.y}
-
-  return F
-}
-
-// calculates placement based on the force of gravity
-function calculateplacement(loc1, loc2, index1, index2)
-{
-  planets[index1].force = gravity(loc1, loc2, planets[index1].mass, planets[index2].mass)
-  
-  planets[index1].momentum.x += planets[index1].force.x * deltaTime
-  planets[index1].momentum.y += planets[index1].force.y * deltaTime
-
-  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime
-  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime
-
-  let dddd = {
-  x: x, 
-  y: y
-  }
-
-  return dddd
-}
-
-//changes the scale variable when turning the mousewheel
-function changeSize(event)
-{
-  if (event.deltaY < 0)
-  {
-    scale += 0.05
-  } 
-  else 
-  {
-    if (scale > 0.1)
-    {
-      scale -= 0.05
-    } 
-    else if (scale >= 0) 
-    {
-      scale -= 0.001
-    } 
-    else 
-    {
-      scale = 0
-    }
-  }
 }
