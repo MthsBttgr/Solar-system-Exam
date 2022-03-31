@@ -1,55 +1,61 @@
+//making the gravity constant
 const G = 1;
 
-let t = 0;
+//making the time difference every frame
 let deltaTime = 1;
 
+//setting up arrays for objects and values
 let planets = [];
 let p = [];
-
 let mom = [];
 
+//setting up scale variable which is used for zooming in and out
 let scale = 1;
 
 
 function setup() {
-  canvas = createCanvas(windowWidth - 10, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
   canvas.mouseWheel(changeSize)
   translate(width/2, height/2)
 
+  //making a bunch of different points and momentum(s?) and adding them to the p- and mom-array
   for (s = 0; s <= 9; s += 1)
   {
     p[s] = {
-    x: (width / 2) - (140 * s), 
-    y: (height / 2)
+    x: 0 - (100 * s), 
+    y: 0
     }
 
     mom[s] = {
       x: 0,
-      y: 90 - 18 * s
+      y: 90 - 12 * s
     }
   }
 
   mom[0].y = 0
 
-  planets.push(new Planet(10000, 70, p[0], mom[0], color(255, 214, 10)))
-  planets.push(new Planet(10, 10, p[1], mom[1], color(random(255), random(255), random(255))))  
-  planets.push(new Planet(10, 10, p[2], mom[2], color(random(255), random(255), random(255))))
-  planets.push(new Planet(10, 10, p[3], mom[3], color(random(255), random(255), random(255))))
-  planets.push(new Planet(10, 10, p[4], mom[4], color(random(255), random(255), random(255))))
-  planets.push(new Planet(10, 10, p[5], mom[5], color(random(255), random(255), random(255))))  
-  planets.push(new Planet(10, 10, p[6], mom[6], color(random(255), random(255), random(255))))
-  planets.push(new Planet(10, 10, p[7], mom[7], color(random(255), random(255), random(255))))
-  planets.push(new Planet(10, 10, p[8], mom[8], color(random(255), random(255), random(255))))
+  //creating all the planets in the solar system and adding them to the planets-array
+  planets.push(new Planet(10000, 70, p[0], mom[0], color(255, 214, 10), 'sun'))
+  planets.push(new Planet(10, 10, p[1], mom[1], color(random(255), random(255), random(255)),'merkury'))  
+  planets.push(new Planet(10, 10, p[2], mom[2], color(random(255), random(255), random(255)),'venus'))
+  planets.push(new Planet(10, 10, p[3], mom[3], color(random(255), random(255), random(255)),'earth'))
+  planets.push(new Planet(10, 10, p[4], mom[4], color(random(255), random(255), random(255)),'mars'))
+  planets.push(new Planet(10, 10, p[5], mom[5], color(random(255), random(255), random(255)),'jupiter'))  
+  planets.push(new Planet(10, 10, p[6], mom[6], color(random(255), random(255), random(255)),'saturn'))
+  planets.push(new Planet(10, 10, p[7], mom[7], color(random(255), random(255), random(255)),'uranus'))
+  planets.push(new Planet(10, 10, p[8], mom[8], color(random(255), random(255), random(255)),'neptune'))
 
 }
 
 function draw() 
 {
   background(0);
-  translate(width/(2/scale), height/(2/scale))
 
-// calculates placement for all planets in the array
-  for (i = 0; i <= 7; i++)
+  //making sure the center of the canvas is always at the center of the screen
+  translate(width/2, height/2)
+
+  // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
+  for (i = 0; i <= 8; i++)
   {
     for (o = 0; o <= 7; o++)
     {
@@ -67,6 +73,7 @@ function draw()
     }
   }
 
+  // U can move the screen by pressing a mousebutton
   if (mouseIsPressed)
   {
     let deltaX = mouseX - pwinMouseX
@@ -79,8 +86,8 @@ function draw()
     }
   }
 
-// shows all planets in array
-  for (s = 0; s <= 7; s++)
+  // shows all planets in array
+  for (s = 0; s <= 8; s++)
   {
     planets[s].showPlanet(p[s], scale)
   }
@@ -119,12 +126,26 @@ function calculateplacement(loc1, loc2, index1, index2)
   return dddd
 }
 
+//changes the scale variable when turning the mousewheel
 function changeSize(event)
 {
   if (event.deltaY < 0)
   {
     scale += 0.05
-  } else {
-    scale -= 0.05
+  } 
+  else 
+  {
+    if (scale > 0.1)
+    {
+      scale -= 0.05
+    } 
+    else if (scale >= 0) 
+    {
+      scale -= 0.001
+    } 
+    else 
+    {
+      scale = 0
+    }
   }
 }
