@@ -1,27 +1,31 @@
 const G = 1;
 
 let t = 0;
-let deltaTime = 0.7;
+let deltaTime = 1;
 
 let planets = [];
 let p = [];
 
 let mom = [];
 
+let scale = 1;
+
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth - 10, windowHeight);
+  canvas.mouseWheel(changeSize)
+  translate(width/2, height/2)
 
   for (s = 0; s <= 9; s += 1)
   {
     p[s] = {
-    x: width / 2 - 120 * s, 
-    y: height / 2
+    x: (width / 2) - (140 * s), 
+    y: (height / 2)
     }
 
     mom[s] = {
       x: 0,
-      y: 150 - 30 * s
+      y: 90 - 18 * s
     }
   }
 
@@ -32,32 +36,57 @@ function setup() {
   planets.push(new Planet(10, 10, p[2], mom[2], color(random(255), random(255), random(255))))
   planets.push(new Planet(10, 10, p[3], mom[3], color(random(255), random(255), random(255))))
   planets.push(new Planet(10, 10, p[4], mom[4], color(random(255), random(255), random(255))))
-
-  console.log(planets)
-  console.log(p)
+  planets.push(new Planet(10, 10, p[5], mom[5], color(random(255), random(255), random(255))))  
+  planets.push(new Planet(10, 10, p[6], mom[6], color(random(255), random(255), random(255))))
+  planets.push(new Planet(10, 10, p[7], mom[7], color(random(255), random(255), random(255))))
+  planets.push(new Planet(10, 10, p[8], mom[8], color(random(255), random(255), random(255))))
 
 }
 
 function draw() 
 {
-  background(50);
+  background(0);
+  translate(width/(2/scale), height/(2/scale))
 
-
-  p[0].x += calculateplacement(p[0],p[1],0,1).x + calculateplacement(p[0],p[2],0,1).x
-  p[0].y += calculateplacement(p[0],p[1],0,1).y + calculateplacement(p[0],p[2],0,1).y
-  p[1].x += calculateplacement(p[1],p[0],1,0).x + calculateplacement(p[1],p[2],0,1).x
-  p[1].y += calculateplacement(p[1],p[0],1,0).y + calculateplacement(p[1],p[2],0,1).y
-  p[2].x += calculateplacement(p[2],p[0],2,0).x + calculateplacement(p[2],p[1],0,1).x
-  p[2].y += calculateplacement(p[2],p[0],2,0).y + calculateplacement(p[2],p[1],0,1).y
-
-  for (s = 0; s <= 2; s++)
+// calculates placement for all planets in the array
+  for (i = 0; i <= 7; i++)
   {
-    planets[s].showPlanet(p[s])
-    planets[s].showPlanet(p[s])
-    planets[s].showPlanet(p[s])
+    for (o = 0; o <= 7; o++)
+    {
+      if (i === o)
+      {
+        if (o === 9)
+        {
+          break
+        } else {
+          o++
+        } 
+      }
+      p[i].x += calculateplacement(p[i],p[o],i,o).x
+      p[i].y += calculateplacement(p[i],p[o],i,o).y
+    }
+  }
+
+  if (mouseIsPressed)
+  {
+    let deltaX = mouseX - pwinMouseX
+    let deltaY = mouseY - pwinMouseY
+
+    for (i = 0; i <= 7; i++)
+    {
+      p[i].x += deltaX / scale;
+      p[i].y += deltaY / scale;
+    }
+  }
+
+// shows all planets in array
+  for (s = 0; s <= 7; s++)
+  {
+    planets[s].showPlanet(p[s], scale)
   }
 }
 
+// calculates the force of gravity excuded on one body from another
 function gravity(p1, p2, mass1, mass2)
 {
   let r = {x: p1.x - p2.x, y: p1.y - p2.y}
@@ -71,6 +100,7 @@ function gravity(p1, p2, mass1, mass2)
   return F
 }
 
+// calculates placement based on the force of gravity
 function calculateplacement(loc1, loc2, index1, index2)
 {
   planets[index1].force = gravity(loc1, loc2, planets[index1].mass, planets[index2].mass)
@@ -87,4 +117,14 @@ function calculateplacement(loc1, loc2, index1, index2)
   }
 
   return dddd
+}
+
+function changeSize(event)
+{
+  if (event.deltaY < 0)
+  {
+    scale += 0.05
+  } else {
+    scale -= 0.05
+  }
 }

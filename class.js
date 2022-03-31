@@ -11,13 +11,14 @@ class Planet
         this.color = color;
     }
 
-    showPlanet(position)
+    showPlanet(position, scale)
     {
         noStroke()
         fill(this.color)
 
         this.position = position;
+        this.scale = scale;
 
-        circle(this.position.x, this.position.y, this.radius)
+        circle(this.position.x * this.scale, this.position.y * this.scale, this.radius * this.scale)
     }
 }
