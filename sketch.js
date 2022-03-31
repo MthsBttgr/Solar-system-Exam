@@ -1,22 +1,25 @@
-//making the gravity constant
-const G = 1;
+//making global variables
+{
+  //making the gravity constant
+  const G = 1;
 
-//making the time difference every frame
-let deltaTime = 1;
+  //making the time difference every frame
+  let deltaTime = 1;
 
-//setting up arrays for objects and values
-let planets = [];
-let p = [];
-let mom = [];
+  //setting up arrays for objects and values
+  let planets = [];
+  let p = [];
+  let mom = [];
 
-//setting up scale variable which is used for zooming in and out
-let scale = 1;
+  //setting up scale variable which is used for zooming in and out
+  let scale = 1;
 
-//setting up the width of the sidebar
-let sidebarW = 230
+  //setting up the width of the sidebar
+  let sidebarW = 230
+}
 
-
-function setup() {
+function setup() 
+{
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.mouseWheel(changeSize)
   translate(width/2, height/2)
@@ -54,48 +57,49 @@ function draw()
 {
   background(0);
 
-  //makes a zone where i change the settings, when displaying the planets and calculating stuff
+  //displaying the planets and calculating movement in a seperated zone
   push()
-
-  //making sure the center of the canvas is always at the center of the screen
-  translate((width- sidebarW)/2, height/2)
-
-  // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
-  for (i = 0; i <= 8; i++)
   {
-    for (o = 0; o <= 7; o++)
+    //making sure the center of the canvas is always at the center of the screen
+    translate((width- sidebarW)/2, height/2)
+
+    // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
+    for (i = 0; i <= 8; i++)
     {
-      if (i === o)
+      for (o = 0; o <= 7; o++)
       {
-        if (o === 9)
+        if (i === o)
         {
-          break
-        } else {
-          o++
-        } 
+          if (o === 9)
+          {
+            break
+          } else {
+            o++
+          } 
+        }
+        p[i].x += calculateplacement(p[i],p[o],i,o).x
+        p[i].y += calculateplacement(p[i],p[o],i,o).y
       }
-      p[i].x += calculateplacement(p[i],p[o],i,o).x
-      p[i].y += calculateplacement(p[i],p[o],i,o).y
     }
-  }
 
-  // U can move the screen by pressing a mousebutton
-  if (mouseIsPressed)
-  {
-    let deltaX = mouseX - pwinMouseX
-    let deltaY = mouseY - pwinMouseY
-
-    for (i = 0; i <= 7; i++)
+    // U can move the screen by pressing a mousebutton
+    if (mouseIsPressed)
     {
-      p[i].x += deltaX / scale;
-      p[i].y += deltaY / scale;
-    }
-  }
+      let deltaX = mouseX - pwinMouseX
+      let deltaY = mouseY - pwinMouseY
 
-  // shows all planets in array
-  for (s = 0; s <= 8; s++)
-  {
-    planets[s].showPlanet(p[s], scale)
+      for (i = 0; i <= 7; i++)
+      {
+        p[i].x += deltaX / scale;
+        p[i].y += deltaY / scale;
+      }
+    }
+
+    // shows all planets in array
+    for (s = 0; s <= 8; s++)
+    {
+      planets[s].showPlanet(p[s], scale)
+    }
   }
   pop()
 
