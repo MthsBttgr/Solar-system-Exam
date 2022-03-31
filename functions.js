@@ -1,4 +1,6 @@
 // calculates the force of gravity excuded on one body from another
+// inputs two points and two masses, which the points represents
+// returns an object, F, with an x- and a y-component representing a vector representing the force of gravity towards another
 function gravity(p1, p2, mass1, mass2)
 {
   let r = {x: p1.x - p2.x, y: p1.y - p2.y}
@@ -13,6 +15,8 @@ function gravity(p1, p2, mass1, mass2)
 }
 
 // calculates placement based on the force of gravity
+// inputs two points and two indexes for the planets-array
+// returns the amount a planet should move as an object, dddd, with an x- and a y-component, representing a vector
 function calculateplacement(loc1, loc2, index1, index2)
 {
   planets[index1].force = gravity(loc1, loc2, planets[index1].mass, planets[index2].mass)
@@ -31,7 +35,9 @@ function calculateplacement(loc1, loc2, index1, index2)
   return dddd
 }
 
-//changes the scale variable when turning the mousewheel
+// changes the scale variable when turning the mousewheel
+// inputs the mousewheel event, when the mousewheel is turned
+// changes the scale-value
 function changeSize(event)
 {
   if (event.deltaY < 0)

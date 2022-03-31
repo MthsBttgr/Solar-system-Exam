@@ -1,22 +1,20 @@
-//making global variables
-{
-  //making the gravity constant
-  const G = 1;
+//making the gravity constant
+const G = 1;
 
-  //making the time difference every frame
-  let deltaTime = 1;
+//making the time difference every frame
+let deltaTime = 1;
 
-  //setting up arrays for objects and values
-  let planets = [];
-  let p = [];
-  let mom = [];
+//setting up arrays for objects and values
+let planets = [];
+let p = [];
+let mom = [];
 
-  //setting up scale variable which is used for zooming in and out
-  let scale = 1;
+//setting up scale variable which is used for zooming in and out
+let scale = 1;
 
-  //setting up the width of the sidebar
-  let sidebarW = 230
-}
+//setting up the width of the sidebar
+let sidebarW = 230
+
 
 function setup() 
 {
