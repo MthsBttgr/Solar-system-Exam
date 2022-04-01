@@ -42,10 +42,21 @@ function changeSize(event)
 {
   if (event.deltaY < 0)
   {
-    scale += 0.05
+    if (scale <= 3)
+    {
+      scale += 0.05
+    }
+    else 
+    {
+      scale += 1
+    }
   } 
   else 
   {
+    if (scale > 5)
+    {
+      scale -= 0.9
+    } 
     if (scale > 0.1)
     {
       scale -= 0.05
