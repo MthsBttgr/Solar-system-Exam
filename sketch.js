@@ -9,32 +9,37 @@ let planets = [];
 let p = [];
 let mom = [];
 
+let pics = [];
+
 //setting up scale variable which is used for zooming in and out
 let scale = 0.5;
 
-//setting up the width of the sidebar
-let sidebarW = 230
+//setting up the width of the sidebar and scrolling on sidebar
+let sidebarW = 260
+let scrollwheelY = 0
 
 function preload()
 {
-  merk = loadImage('Pics/merkur.png')
-  venus = loadImage('Pics/venus.png')
-  jord = loadImage('Pics/jorden.png')
-  mars = loadImage('Pics/mars.png')
-  jupi = loadImage('Pics/jupiter.png')
-  saturn = loadImage('Pics/saturn.png')
-  anus = loadImage('Pics/uranus.png')
-  nept = loadImage('Pics/neptune.png')
+  pics.push(loadImage('Pics/solen.png'))
+  pics.push(loadImage('Pics/merkur.png'))
+  pics.push(loadImage('Pics/venus.png'))
+  pics.push(loadImage('Pics/jorden.png'))
+  pics.push(loadImage('Pics/mars.png'))
+  pics.push(loadImage('Pics/jupiter.png'))
+  pics.push(loadImage('Pics/saturn.png'))
+  pics.push(loadImage('Pics/uranus.png'))
+  pics.push(loadImage('Pics/neptune.png'))
 }
 
 function setup() 
 {
   canvas = createCanvas(windowWidth, windowHeight);
-  canvas.mouseWheel(changeSize)
+  canvas.mouseWheel(scrollWheel)
+  noStroke()
   translate((width - sidebarW)/2, height/2)
 
   //making a bunch of different points and momentum(s?) and adding them to the p- and mom-array
-  for (s = 0; s <= 9; s += 1)
+  for (let s = 0; s <= 9; s += 1)
   {
     p[s] = {
     x: 0 - (200 * s), 
@@ -64,9 +69,9 @@ function setup()
   planets.push(new Planet(10, 10, p[7], mom[7], color(83, 117, 117),'Uranus'))
   planets.push(new Planet(10, 10, p[8], mom[8], color(11, 100, 217),'Neptun'))
   }
-  
-  Sidebar = new sidebar(sidebarW, color(50,50,50));
-  Sidebar.showSidebar(windowWidth, windowHeight);
+  //console.log(planets)
+
+  Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 }
 
 function draw() 
@@ -80,9 +85,9 @@ function draw()
     translate((width - sidebarW)/2, height/2)
 
     // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
-    for (i = 0; i <= 8; i++)
+    for (let i = 0; i <= 8; i++)
     {
-      for (o = 0; o <= 7; o++)
+      for (let o = 0; o <= 7; o++)
       {
         if (i === o)
         {
@@ -99,12 +104,12 @@ function draw()
     }
 
     // U can move the screen by pressing a mousebutton
-    if (mouseIsPressed)
+    if (mouseIsPressed && mouseX < width - sidebarW)
     {
       let deltaX = mouseX - pwinMouseX
       let deltaY = mouseY - pwinMouseY
 
-      for (i = 0; i <= 8; i++)
+      for (let i = 0; i <= 8; i++)
       {
         p[i].x += deltaX / scale;
         p[i].y += deltaY / scale;
@@ -112,15 +117,17 @@ function draw()
     }
 
     // shows all planets in array
-    for (s = 0; s <= 8; s++)
+    for (let s = 0; s <= 8; s++)
     {
       planets[s].showPlanet(p[s], scale)
     }
   }
   pop()
 
-  fill(50)
-  //rect(width - sidebarW, 0, sidebarW, height)
-  Sidebar.showSidebar(windowWidth, windowHeight);
+  translate(0,scrollwheelY)
 
+
+  Sidebar.showSidebar(windowWidth, windowHeight);
+  Sidebar.preview(0);
+  Sidebar.planetList(planets)
 }

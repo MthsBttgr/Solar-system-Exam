@@ -35,18 +35,32 @@ function calculateplacement(loc1, loc2, index1, index2)
   return dddd
 }
 
-// changes the scale variable when turning the mousewheel
+// changes the scale variable when turning the mousewheel when mouse is in "space"
+// scrolls up and down in sidebar when turning the mousewheel when the mouse is in the sidebar
 // inputs the mousewheel event, when the mousewheel is turned
 // changes the scale-value
-function changeSize(event)
+function scrollWheel(event)
 {
-  if (event.deltaY < 0)
+  if(mouseX < width - sidebarW)
   {
-    scale = scale / 0.9
-  } 
-  else 
-  {
-    scale = scale * 0.9
-    
+    if (event.deltaY < 0)
+    {
+      scale = scale / 0.9
+    } 
+    else 
+    {
+      scale = scale * 0.9
+      
+    }
+  }
+  else{
+    if (event.deltaY < 0)
+    {
+      scrollWheelY = -10
+    } 
+    else 
+    {
+      scrollWheelY = 10
+    }
   }
 }
