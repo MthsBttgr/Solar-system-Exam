@@ -24,8 +24,8 @@ function calculateplacement(loc1, loc2, index1, index2)
   planets[index1].momentum.x += planets[index1].force.x * deltaTime
   planets[index1].momentum.y += planets[index1].force.y * deltaTime
 
-  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime
-  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime
+  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime 
+  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime 
 
   let dddd = {
   x: x, 
@@ -42,21 +42,11 @@ function changeSize(event)
 {
   if (event.deltaY < 0)
   {
-    scale += 0.05
+    scale = scale / 0.9
   } 
   else 
   {
-    if (scale > 0.1)
-    {
-      scale -= 0.05
-    } 
-    else if (scale >= 0) 
-    {
-      scale -= 0.001
-    } 
-    else 
-    {
-      scale = 0
-    }
+    scale = scale * 0.9
+    
   }
 }

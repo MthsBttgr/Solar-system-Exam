@@ -28,3 +28,18 @@ class Planet
         text(this.name, this.position.x * this.scale, this.position.y * this.scale + this.radius * this.scale  + 20)
     }
 }
+
+class sidebar
+{
+    constructor(sidebarWidth, bgcolor)
+    {
+        this.sidebarWidth = sidebarWidth;
+        this.bgcolor = bgcolor
+    }
+
+    showSidebar(width, height)
+    {
+        fill(this.bgcolor)
+        rect(width - this.sidebarWidth,0,this.sidebarWidth,height)
+    }
+}
