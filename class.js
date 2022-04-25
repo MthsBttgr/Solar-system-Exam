@@ -56,13 +56,36 @@ class sidebar
         this.list[0].selected = true
 
         this.listColor;
+
+        this.descrButton = new ScreenElements(width - this.sidebarWidth + 10, height - 50, this.sidebarWidth - 20, 30, 10, "Deskription")
     }
 
     //draws the sidebar
-    showSidebar(width, height)
+    showSidebar(descriptions)
     {
         fill(this.bgcolor)
-        rect(width - this.sidebarWidth,0,this.sidebarWidth,height)
+        rect(width - this.sidebarWidth,0,this.sidebarWidth, height)
+
+        this.descrButton.button()
+
+        if (this.descrButton.isSelected())
+        {
+            fill(255, 255, 255, 100)
+            rect(0, height / 3, width - this.sidebarWidth, height / 3)
+
+            fill(255)
+            for(let p = 0; p <= descriptions.length - 1; p++)
+            {
+                this.state = this.list[p].returnState()
+                if (this.state === p)
+                {
+                    for(let d = 0; d <= descriptions[p].length; d++)
+                    {
+                        text(descriptions[p][d], width / 2 - this.sidebarWidth, height / 3 + 20 * d + 50)
+                    }
+                }
+            }
+        }
     }
 
     //shows a picture of the "selected" planet from a property called state
@@ -86,7 +109,7 @@ class sidebar
     {   
         for(let p = 0; p < planeter.length; p++)
         {
-            this.list[p].showList(planeter[p].name, planeter[p].color)
+            this.list[p].showList(planeter[p].name, planeter[p].color, this.descrButton.isSelected())
         }
     }
 }
@@ -113,7 +136,7 @@ class PlanetList
     }
     
     //makes square based on some given properties (name and textcolor) and can change color based on mouseplacement and the property "selected"
-    showList(name, textColor)
+    showList(name, textColor, buttonselect)
     { 
         this.name = name;
         this.textColor = textColor;
@@ -123,7 +146,7 @@ class PlanetList
         {
             fill(this.selectedCol);
 
-            if (mouseIsPressed && !this.mouseoverRECT() && mouseX > width - sidebarW)
+            if (mouseIsPressed && !this.mouseoverRECT() && mouseX > width - sidebarW && !buttonselect)
             {
                 this.selected = false;
             }
@@ -251,7 +274,7 @@ class ScreenElements
         {
             fill(this.selectedCol);
 
-            if (mouseIsPressed && !this.mouseoverRECT() && mouseX > width - sidebarW)
+            if (mouseIsPressed && !this.mouseoverRECT())
             {
                 this.selected = false;
             }
@@ -280,6 +303,14 @@ class ScreenElements
     mouseoverRECT()
     {
         if(mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height)
+        {
+            return true;
+        }
+    }
+
+    isSelected()
+    {
+        if (this.selected)
         {
             return true;
         }

@@ -32,6 +32,14 @@ function preload()
   pics.push(loadImage('Pics/neptune.png'))
 
   planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/merkur.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/venus.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/jorden.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/mars.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/jupiter.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
 }
 
 function setup() 
@@ -40,6 +48,8 @@ function setup()
   canvas.mouseWheel(scrollWheel)
   noStroke()
   translate((width - sidebarW)/2, height/2)
+
+  console.log(planetDescriptions)
 
   //making a bunch of different points and momentum(s?) and adding them to the p- and mom-array
   for (let s = 0; s <= 9; s += 1)
@@ -82,8 +92,6 @@ function setup()
 
   //creates sliders for manipulating parameters
   slider = new ScreenElements(35,35,150,6,12,"speed:")
-
-  descrButton = new ScreenElements(width - sidebarW + 10, height - 50, sidebarW - 20, 30, 10, "deskription")
 }
 
 function draw() 
@@ -138,22 +146,10 @@ function draw()
   }
   pop()
 
-  Sidebar.showSidebar(windowWidth, windowHeight);
+  Sidebar.showSidebar(planetDescriptions);
   Sidebar.preview();
   Sidebar.planetList(planets)
 
-  fill(255)
-  slider.slider(0, 2, "speed:")
-  deltaTime = slider.slidervalue()
-
-  descrButton.button()
-
-  /*
-  if (mouseIsPressed)
-  {
-    fill(255)
-    for(let d = 0; d <= planetDescriptions[0].length; d++)
-    text(planetDescriptions[0][d], 500,100 + 20 * d)
-  }
-  */
+  this.slider.slider(0, 2, "speed:")
+  deltaTime = this.slider.slidervalue()
 }
