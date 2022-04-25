@@ -10,6 +10,7 @@ let p = [];
 let mom = [];
 
 let pics = [];
+let planetDescriptions = [];
 
 //setting up scale variable which is used for zooming in and out
 let scale = 0.5;
@@ -29,6 +30,8 @@ function preload()
   pics.push(loadImage('Pics/saturn.png'))
   pics.push(loadImage('Pics/uranus.png'))
   pics.push(loadImage('Pics/neptune.png'))
+
+  planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
 }
 
 function setup() 
@@ -47,6 +50,9 @@ function setup()
     }
 
   }
+
+  //making all the momentum object variables
+  {
   mom[0] = {x: 0, y: 0}
   mom[1] = {x: 0, y: 38}
   mom[2] = {x: 0, y: 30}
@@ -56,6 +62,7 @@ function setup()
   mom[6] = {x: 0, y: 19}
   mom[7] = {x: 0, y: 17}
   mom[8] = {x: 0, y: 16}
+  }
 
   //creating all the planets in the solar system and adding them to the planets-array
   {
@@ -74,7 +81,9 @@ function setup()
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
-  slider = new Buttons(35,35,150,6,5)
+  slider = new ScreenElements(35,35,150,6,12,"speed:")
+
+  descrButton = new ScreenElements(width - sidebarW + 10, height - 50, sidebarW - 20, 30, 10, "deskription")
 }
 
 function draw() 
@@ -129,12 +138,22 @@ function draw()
   }
   pop()
 
-  translate(0,scrollwheelY)
   Sidebar.showSidebar(windowWidth, windowHeight);
-  Sidebar.preview(0);
+  Sidebar.preview();
   Sidebar.planetList(planets)
 
   fill(255)
-  slider.slider(int(0), int(2), "speed:")
+  slider.slider(0, 2, "speed:")
   deltaTime = slider.slidervalue()
+
+  descrButton.button()
+
+  /*
+  if (mouseIsPressed)
+  {
+    fill(255)
+    for(let d = 0; d <= planetDescriptions[0].length; d++)
+    text(planetDescriptions[0][d], 500,100 + 20 * d)
+  }
+  */
 }
