@@ -24,8 +24,8 @@ function calculateplacement(loc1, loc2, index1, index2)
   planets[index1].momentum.x += planets[index1].force.x * deltaTime
   planets[index1].momentum.y += planets[index1].force.y * deltaTime
 
-  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime
-  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime
+  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime 
+  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime 
 
   let dddd = {
   x: x, 
@@ -35,39 +35,32 @@ function calculateplacement(loc1, loc2, index1, index2)
   return dddd
 }
 
-// changes the scale variable when turning the mousewheel
+// changes the scale variable when turning the mousewheel when mouse is in "space"
+// scrolls up and down in sidebar when turning the mousewheel when the mouse is in the sidebar
 // inputs the mousewheel event, when the mousewheel is turned
 // changes the scale-value
-function changeSize(event)
+function scrollWheel(event)
 {
-  if (event.deltaY < 0)
+  if(mouseX < width - sidebarW)
   {
-    if (scale <= 3)
+    if (event.deltaY < 0)
     {
-      scale += 0.05
-    }
-    else 
-    {
-      scale += 1
-    }
-  } 
-  else 
-  {
-    if (scale > 5)
-    {
-      scale -= 0.9
-    } 
-    if (scale > 0.1)
-    {
-      scale -= 0.05
-    } 
-    else if (scale >= 0) 
-    {
-      scale -= 0.001
+      scale = scale / 0.9
     } 
     else 
     {
-      scale = 0
+      scale = scale * 0.9
+      
+    }
+  }
+  else{
+    if (event.deltaY < 0)
+    {
+      scrollWheelY = -10
+    } 
+    else 
+    {
+      scrollWheelY = 10
     }
   }
 }
