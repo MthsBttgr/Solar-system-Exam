@@ -2,7 +2,7 @@
 const G = 1;
 
 //making the time difference every frame
-let deltaTime = 3;
+let deltaTime = 1;
 
 //setting up arrays for objects and values
 let planets = [];
@@ -69,9 +69,12 @@ function setup()
   planets.push(new Planet(10, 10, p[7], mom[7], color(83, 117, 117),'Uranus'))
   planets.push(new Planet(10, 10, p[8], mom[8], color(11, 100, 217),'Neptun'))
   }
-  //console.log(planets)
 
+  //creates the sidebar
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
+
+  //creates sliders for manipulating parameters
+  slider = new Buttons(35,35,150,6,5)
 }
 
 function draw() 
@@ -104,11 +107,11 @@ function draw()
     }
 
     // U can move the screen by pressing a mousebutton
-    if (mouseIsPressed && mouseX < width - sidebarW)
+    if (mouseIsPressed && mouseX < width - sidebarW && !slider.mouseovercircle())
     {
       let deltaX = mouseX - pwinMouseX
       let deltaY = mouseY - pwinMouseY
-
+      
       for (let i = 0; i <= 8; i++)
       {
         p[i].x += deltaX / scale;
@@ -121,13 +124,17 @@ function draw()
     {
       planets[s].showPlanet(p[s], scale)
     }
+
+    
   }
   pop()
 
   translate(0,scrollwheelY)
-
-
   Sidebar.showSidebar(windowWidth, windowHeight);
   Sidebar.preview(0);
   Sidebar.planetList(planets)
+
+  fill(255)
+  slider.slider(int(0), int(2), "speed:")
+  deltaTime = slider.slidervalue()
 }

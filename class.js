@@ -1,6 +1,6 @@
 class Planet
 {
-    constructor(mass, radius, position, momentum, color, name)
+    constructor(mass, radius, position, momentum, color, name, index)
     {
         this.mass = mass;
         this.radius = radius;
@@ -8,9 +8,11 @@ class Planet
         this.momentum = momentum;
         this.force;
 
-        this.name = name
-        
         this.color = color;
+
+        this.name = name;
+        
+        this.index = index;
         
     }
 
@@ -27,6 +29,16 @@ class Planet
         textAlign(CENTER)
         textSize(15)
         text(this.name, this.position.x * this.scale, this.position.y * this.scale + this.radius * this.scale  + 20)
+    }
+
+    mouseovercircle()
+    {
+        //returns true if mouse is over the planet
+        this.d = dist(mouseX, mouseY, this.position.x, this.position.y);
+        if(mouseIsPressed && this.d < 15)
+        {
+            return true;
+        }
     }
 }
 
@@ -79,7 +91,6 @@ class sidebar
             this.list[p].mouseoverRECT()
         }
     }
-
 }
 
 class Buttons
@@ -91,6 +102,11 @@ class Buttons
         this.width = Width
         this.height = Height
         this.bevel = bevel
+
+        this.xCircle = this.x + this.width / 2
+        this.yCircle = this.y
+        this.d;
+        this.returnvalue;
 
         this.basecol = color(40)
         this.mouseOverCol = color(30)
@@ -160,6 +176,55 @@ class Buttons
         if (this.selected)
         {
             return this.number;
+        }
+    }
+
+    slider(startValue, endValue, tekst)
+    {
+        //tegner aflang rektangel (sliderens ramme) og cirkel (slideren)
+        fill(50);
+        rect(this.x, this.y, this.width, 6, 3);
+
+        fill(150);
+        circle(this.xCircle, this.yCircle + 3, 12);
+
+        textAlign(CENTER,CENTER)
+        fill(255)
+        text(startValue + "x", this.x - 15, this.y + 3)
+        text(endValue + "x", this.x + this.width + 15, this.y + 3)
+        text(tekst, this.x + this.width / 2, this.y - 15)
+
+        //moves the cirkle so it follows your mouse
+        if (mouseIsPressed && this.mouseovercircle())
+        {
+            this.xCircle = mouseX;
+        }
+        //makes the circle stay within the slider
+        if (this.xCircle < this.x)
+        {
+            this.xCircle = this.x;
+        }
+        if (this.xCircle > (this.x + this.width))
+        {
+            this.xCircle = this.x + this.width;
+        }
+
+        //asigner circlens x-værdi mapped til en anden værdi
+        this.returnvalue = map(this.xCircle,this.x,this.x+this.width, startValue, endValue);
+    }
+
+    slidervalue()
+    {
+        return this.returnvalue
+    }
+
+    mouseovercircle()
+    {
+        //returns true if mouse is over circle
+        this.d = dist(mouseX, mouseY, this.xCircle, this.yCircle + 3);
+        if(this.d < 15)
+        {
+            return true;
         }
     }
 }
