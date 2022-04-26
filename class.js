@@ -32,6 +32,19 @@ class Planet
         textSize(15)
         text(this.name, this.position.x * this.scale, this.position.y * this.scale + this.radius * this.scale  + 20)
     }
+
+    mouseOverPlanet()
+    {
+        this.d = dist(mouseX, mouseY, this.position.x, this.position.y);
+        if(this.d < this.radius)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
 }
 
 class sidebar

@@ -64,3 +64,24 @@ function scrollWheel(event)
     }
   }
 }
+
+//creates the startscreen disclaimer
+function startScreen()
+{
+  if(screen === true)
+  {
+    background(0)
+
+    textAlign(CENTER, CENTER)
+    fill(255)
+    textSize(50)
+    text("DISCLAIMER:", width / 2, height / 2 - 50)
+    textSize(20)
+    text("Dette spil er ikke en akkurat repræsentation af solsystemet", width / 2, height / 2 + 15)
+
+    if (mouseIsPressed)
+    {
+      screen = false;
+    }
+  }
+}

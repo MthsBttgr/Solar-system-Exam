@@ -19,28 +19,7 @@ let scale = 0.5;
 let sidebarW = 260
 let scrollwheelY = 0
 
-function preload()
-{
-  pics.push(loadImage('Pics/solen.png'))
-  pics.push(loadImage('Pics/merkur.png'))
-  pics.push(loadImage('Pics/venus.png'))
-  pics.push(loadImage('Pics/jorden.png'))
-  pics.push(loadImage('Pics/mars.png'))
-  pics.push(loadImage('Pics/jupiter.png'))
-  pics.push(loadImage('Pics/saturn.png'))
-  pics.push(loadImage('Pics/uranus.png'))
-  pics.push(loadImage('Pics/neptune.png'))
-
-  planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/merkur.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/venus.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/jorden.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/mars.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/jupiter.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
-}
+let screen = true
 
 function setup() 
 {
@@ -77,11 +56,38 @@ function setup()
   planets.push(new Planet(10, 10, p[8], mom[8], color(11, 100, 217),'Neptun'))
   }
 
+  {
+  pics.push(loadImage('Pics/solen.png'))
+  pics.push(loadImage('Pics/merkur.png'))
+  pics.push(loadImage('Pics/venus.png'))
+  pics.push(loadImage('Pics/jorden.png'))
+  pics.push(loadImage('Pics/mars.png'))
+  pics.push(loadImage('Pics/jupiter.png'))
+  pics.push(loadImage('Pics/saturn.png'))
+  pics.push(loadImage('Pics/uranus.png'))
+  pics.push(loadImage('Pics/neptune.png'))
+
+  planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/merkur.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/venus.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/jorden.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/mars.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/jupiter.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
+  planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
+  }
+
   //creates the sidebar
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
   speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
+
+  
+  /*
+  
+  */
 }
 
 function draw() 
@@ -138,4 +144,6 @@ function draw()
 
   this.speedSlider.slider(0, 2, deltaTime, "x")
   deltaTime = this.speedSlider.slidervalue()
+
+  startScreen()
 }
