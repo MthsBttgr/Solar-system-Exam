@@ -37,7 +37,7 @@ function calculateplacement(loc1, loc2, index1, index2)
 
 function calculateSpeed(masse, radius)
 {
-  let deez = masse * sqrt((G * masse * 1000) / (radius))
+  let deez = masse * sqrt((G * masse) / (radius * 1000))
   return deez
 }
 
