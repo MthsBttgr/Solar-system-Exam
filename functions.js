@@ -88,10 +88,9 @@ function startScreen()
 
 function restart()
 {
-  let restart = new ScreenElements((width - sidebarW)/2, 0, 50, 30, 5, "reset")
-  restart.button()
+  reset.button()
 
-  if (restart.selected)
+  if (reset.selected)
   {
     for (let s = 0; s <= 8; s += 1)
     {

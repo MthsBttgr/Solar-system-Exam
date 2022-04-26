@@ -32,19 +32,6 @@ class Planet
         textSize(15)
         text(this.name, this.position.x * this.scale, this.position.y * this.scale + this.radius * this.scale  + 20)
     }
-
-    mouseOverPlanet()
-    {
-        this.d = dist(mouseX, mouseY, this.position.x, this.position.y);
-        if(this.d < this.radius)
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
-    }
 }
 
 class sidebar
@@ -160,6 +147,9 @@ class PlanetList
         this.selectedCol = color(20)
         this.textColor;
 
+        this.playedClick = false;
+        this.playedClicked = false;
+
         this.selected = false;
 
         this.number = number;
@@ -189,6 +179,11 @@ class PlanetList
 
             if (mouseIsPressed)
             {
+                if(this.playedClicked === false)
+                {
+                    clicked.play(0,1,0.3)
+                    this.playedClicked = true;
+                }
                 this.selected = true;
             }
         } 
@@ -210,10 +205,17 @@ class PlanetList
     {
         if(mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height)
         {
+            if(this.playedClick === false)
+            {
+                click.play(0, 1, 0.2)
+                this.playedClick = true;
+            }
             return true;
         }
         else
         {
+            this.playedClick = false;
+            this.playedClicked = false;
             return false;
         }
     }
@@ -242,8 +244,12 @@ class ScreenElements
         this.mouseOverCol = color(30)
         this.selectedCol = color(20)
 
+        this.playedClick = false;
+        this.playedClicked = false;
+
         this.selected = false;
 
+        this.deltaXcircle1 = 0;
         this.xCircle;
         this.yCircle = this.y
         this.d;
@@ -256,7 +262,7 @@ class ScreenElements
     slider(startValue, endValue, value, unit)
     {
         this.xCircle = map(value, startValue, endValue, this.x, this.x + this.width)
-
+   
         //draws a rektangel (the slider range) and a circle (the slider)
         fill(40);
         rect(this.x, this.y, this.width, 6, 3);
@@ -275,6 +281,11 @@ class ScreenElements
         //moves the cirkle so it follows your mouse
         if (mouseIsPressed && this.mouseovercircle())
         {
+            if (!clicked.isPlaying() && (this.xCircle > this.deltaXcircle1 + 10 || this.xCircle < this.deltaXcircle1 - 10))
+            {
+                clicked.play(0, 1, 0.3);
+                this.deltaXcircle1 = this.xCircle;
+            }
             this.xCircle = mouseX;
         }
         //makes the circle stay within the slider
@@ -329,6 +340,11 @@ class ScreenElements
 
             if (mouseIsPressed)
             {
+                if(this.playedClicked === false)
+                {
+                    clicked.play(0,1,0.3)
+                    this.playedClicked = true;
+                }
                 this.selected = true;
             }
         } 
@@ -348,10 +364,17 @@ class ScreenElements
     {
         if(mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height)
         {
+            if(this.playedClick === false)
+            {
+                click.play(0, 1, 0.2)
+                this.playedClick = true;
+            }
             return true;
         }
         else 
         {
+            this.playedClick = false;
+            this.playedClicked = false;
             return false;
         }
     }

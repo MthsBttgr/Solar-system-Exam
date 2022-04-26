@@ -76,6 +76,9 @@ function setup()
   planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
   planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
   planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
+
+  click = loadSound('Sounds/click.wav')
+  clicked = loadSound('Sounds/clicked.wav')
   }
 
   //creates the sidebar
@@ -83,6 +86,8 @@ function setup()
 
   //creates sliders for manipulating parameters
   speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
+
+  reset = new ScreenElements((width - sidebarW)/2, 0, 50, 30, 5, "reset")
 }
 
 function draw() 
