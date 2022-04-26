@@ -71,7 +71,7 @@ function setup()
   //making all the momentum object variables
   for (let m = 1; m <= 8; m++)
   {
-    mom[m] = {x: 0, y: calculateSpeed(mass[m], -p[m].x)}
+    mom[m] = {x: 0, y: calculateSpeed(mass[m], -p[m].x, -p[3].x)}
   }
   mom[0] = {x:0, y:0}
   
