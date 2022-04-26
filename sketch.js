@@ -83,11 +83,6 @@ function setup()
 
   //creates sliders for manipulating parameters
   speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
-
-  
-  /*
-  
-  */
 }
 
 function draw() 
@@ -145,5 +140,6 @@ function draw()
   this.speedSlider.slider(0, 2, deltaTime, "x")
   deltaTime = this.speedSlider.slidervalue()
 
+  restart()
   startScreen()
 }

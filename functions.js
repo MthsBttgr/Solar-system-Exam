@@ -85,3 +85,29 @@ function startScreen()
     }
   }
 }
+
+function restart()
+{
+  let restart = new ScreenElements((width - sidebarW)/2, 0, 50, 30, 5, "reset")
+  restart.button()
+
+  if (restart.selected)
+  {
+    for (let s = 0; s <= 8; s += 1)
+    {
+      p[s] = {
+      x: 0 - (200 * s), 
+      y: 0
+      }
+    }
+
+    //making all the momentum object variables
+    for (let m = 0; m <= 8; m++)
+    {
+      planets[m].momentum = {x: 0, y: 35.305 * pow(0.8885, m)}
+      planets[m].mass = 10
+    }
+
+    planets[0].mass = 10000
+  }
+}
