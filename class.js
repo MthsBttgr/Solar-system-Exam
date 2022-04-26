@@ -57,31 +57,39 @@ class sidebar
 
         this.listColor;
 
+        //creates button for description
         this.descrButton = new ScreenElements(width - this.sidebarWidth + 10, height - 50, this.sidebarWidth - 20, 30, 10, "Deskription")
+
+        //creates slider for manipulating mass
+        this.massSlider = new ScreenElements(width - this.sidebarWidth + 35, height - 100, this.sidebarWidth - 110, 6, 12, "masse")
     }
 
     //draws the sidebar
-    showSidebar(descriptions)
+    showSidebar(descriptions, planetArray)
     {
         fill(this.bgcolor)
         rect(width - this.sidebarWidth,0,this.sidebarWidth, height)
+
+        this.preview()
+        this.planetList(planetArray)
 
         this.descrButton.button()
 
         if (this.descrButton.isSelected())
         {
-            fill(255, 255, 255, 100)
+            fill(0,0,0, 200)
             rect(0, height / 3, width - this.sidebarWidth, height / 3)
 
-            fill(255)
             for(let p = 0; p <= descriptions.length - 1; p++)
             {
                 this.state = this.list[p].returnState()
                 if (this.state === p)
                 {
+                    
                     for(let d = 0; d <= descriptions[p].length; d++)
                     {
-                        text(descriptions[p][d], width / 2 - this.sidebarWidth, height / 3 + 20 * d + 50)
+                        fill(255)
+                        text(descriptions[p][d], width / 2 - this.sidebarWidth / 2, height / 2 + 20 * d - 10 * descriptions[p].length)
                     }
                 }
             }
@@ -109,7 +117,17 @@ class sidebar
     {   
         for(let p = 0; p < planeter.length; p++)
         {
-            this.list[p].showList(planeter[p].name, planeter[p].color, this.descrButton.isSelected())
+            this.list[p].showList(planeter[p].name, planeter[p].color, this.descrButton.mouseoverRECT(), this.massSlider.mouseovercircle())
+        }
+
+        for(let p = 0; p <= 8; p++)
+        {
+            this.state = this.list[p].returnState()
+            if(this.state === p)
+            {
+                this.massSlider.slider(1, 20000, planeter[p].mass, "kg")
+                planeter[p].mass = this.massSlider.slidervalue()
+            } 
         }
     }
 }
@@ -136,7 +154,7 @@ class PlanetList
     }
     
     //makes square based on some given properties (name and textcolor) and can change color based on mouseplacement and the property "selected"
-    showList(name, textColor, buttonselect)
+    showList(name, textColor, buttonselect, sliderselect)
     { 
         this.name = name;
         this.textColor = textColor;
@@ -145,9 +163,10 @@ class PlanetList
         if (this.selected)
         {
             fill(this.selectedCol);
-
-            if (mouseIsPressed && !this.mouseoverRECT() && mouseX > width - sidebarW && !buttonselect)
+            
+            if (mouseIsPressed && mouseX > width - sidebarW && !this.mouseoverRECT() && !buttonselect && !sliderselect)
             {
+
                 this.selected = false;
             }
         }    
@@ -180,6 +199,10 @@ class PlanetList
         {
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
 
     //returns a property called "number", which is used in the sidebar-preview
@@ -208,7 +231,7 @@ class ScreenElements
 
         this.selected = false;
 
-        this.xCircle = this.x + this.width / 2
+        this.xCircle;
         this.yCircle = this.y
         this.d;
         this.returnvalue;
@@ -217,19 +240,23 @@ class ScreenElements
     }
 
     //draws a slider
-    slider(startValue, endValue, tekst)
+    slider(startValue, endValue, value, unit)
     {
+        this.xCircle = map(value, startValue, endValue, this.x, this.x + this.width)
+
         //draws a rektangel (the slider range) and a circle (the slider)
-        fill(50);
+        fill(40);
         rect(this.x, this.y, this.width, 6, 3);
 
         fill(150);
         circle(this.xCircle, this.yCircle + 3, this.radius);
 
-        textAlign(CENTER,CENTER)
         fill(255)
-        text(startValue + "x", this.x - 15, this.y + 3)
-        text(endValue + "x", this.x + this.width + 15, this.y + 3)
+        textAlign(RIGHT,CENTER)
+        text(startValue + unit, this.x - 5, this.y + 3)
+        textAlign(LEFT,CENTER)
+        text(endValue + unit, this.x + this.width + 5, this.y + 3)
+        textAlign(CENTER,CENTER)
         text(this.tekst, this.x + this.width / 2, this.y - 15)
 
         //moves the cirkle so it follows your mouse
@@ -248,7 +275,7 @@ class ScreenElements
         }
 
         //assigns the mapped value of the circle's x-value to a variable
-        this.returnvalue = map(this.xCircle,this.x,this.x+this.width, startValue, endValue);
+        this.returnvalue = map(this.xCircle,this.x,this.x + this.width, startValue, endValue);
     }
 
     //returns value of the slider
@@ -264,6 +291,10 @@ class ScreenElements
         if(this.d < this.radius)
         {
             return true;
+        }
+        else 
+        {
+            return false;
         }
     }
 
@@ -306,6 +337,10 @@ class ScreenElements
         {
             return true;
         }
+        else 
+        {
+            return false;
+        }
     }
 
     isSelected()
@@ -313,6 +348,10 @@ class ScreenElements
         if (this.selected)
         {
             return true;
+        }
+        else 
+        {
+            return false;
         }
     }
 }

@@ -49,29 +49,19 @@ function setup()
   noStroke()
   translate((width - sidebarW)/2, height/2)
 
-  console.log(planetDescriptions)
-
   //making a bunch of different points and momentum(s?) and adding them to the p- and mom-array
-  for (let s = 0; s <= 9; s += 1)
+  for (let s = 0; s <= 8; s += 1)
   {
     p[s] = {
     x: 0 - (200 * s), 
     y: 0
     }
-
   }
 
   //making all the momentum object variables
+  for (let m = 0; m <= 8; m++)
   {
-  mom[0] = {x: 0, y: 0}
-  mom[1] = {x: 0, y: 38}
-  mom[2] = {x: 0, y: 30}
-  mom[3] = {x: 0, y: 25}
-  mom[4] = {x: 0, y: 22}
-  mom[5] = {x: 0, y: 20}
-  mom[6] = {x: 0, y: 19}
-  mom[7] = {x: 0, y: 17}
-  mom[8] = {x: 0, y: 16}
+    mom[m] = {x: 0, y: 35.305 * pow(0.8885, m)}
   }
 
   //creating all the planets in the solar system and adding them to the planets-array
@@ -91,7 +81,7 @@ function setup()
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
-  slider = new ScreenElements(35,35,150,6,12,"speed:")
+  speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
 }
 
 function draw() 
@@ -124,7 +114,7 @@ function draw()
     }
 
     // U can move the screen by pressing a mousebutton
-    if (mouseIsPressed && mouseX < width - sidebarW && !slider.mouseovercircle())
+    if (mouseIsPressed && mouseX < width - sidebarW && !speedSlider.mouseovercircle())
     {
       let deltaX = mouseX - pwinMouseX
       let deltaY = mouseY - pwinMouseY
@@ -141,15 +131,11 @@ function draw()
     {
       planets[s].showPlanet(p[s], scale)
     }
-
-    
   }
   pop()
 
-  Sidebar.showSidebar(planetDescriptions);
-  Sidebar.preview();
-  Sidebar.planetList(planets)
+  Sidebar.showSidebar(planetDescriptions, planets);
 
-  this.slider.slider(0, 2, "speed:")
-  deltaTime = this.slider.slidervalue()
+  this.speedSlider.slider(0, 2, deltaTime, "x")
+  deltaTime = this.speedSlider.slidervalue()
 }
