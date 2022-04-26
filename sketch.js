@@ -1,25 +1,62 @@
 //making the gravity constant
-const G = 1;
+const G = 6.67430e-11;
 
 //making the time difference every frame
-let deltaTime = 1;
+let deltaTime = 0.01;
 
 //setting up arrays for objects and values
 let planets = [];
-let p = [];
+let p = [
+  {x: 0,y: 0},
+  {x: -57900000,y: 0}, 
+  {x: -108000000,y: 0}, 
+  {x: -149600000,y: 0}, 
+  {x: -228000000,y: 0}, 
+  {x: -778000000,y: 0}, 
+  {x: -1434000000,y: 0}, 
+  {x: -2872000000,y: 0}, 
+  {x: -4495000000,y: 0}
+]
 let mom = [];
+let mass = [
+  1.989e30,
+  3.302e23,
+  4.8685e24,
+  5.97219e24,
+  6.4185e23,
+  1.899e27,
+  5.6846e26,
+  8.6832e25,
+  1.0243e26
+]
+let dia = [
+  1392000,
+  4879,
+  12104,
+  12756.1,
+  6794,
+  139822,
+  120536,
+  51118,
+  49244
+]
 
 let pics = [];
 let planetDescriptions = [];
 
 //setting up scale variable which is used for zooming in and out
-let scale = 0.5;
+let scale = 1 / 5000000;
 
 //setting up the width of the sidebar and scrolling on sidebar
 let sidebarW = 260
 let scrollwheelY = 0
 
+//creates variable for startscreen
 let screen = true
+
+//loads all the pictures and descriptions
+//function preload()
+
 
 function setup() 
 {
@@ -28,54 +65,50 @@ function setup()
   noStroke()
   translate((width - sidebarW)/2, height/2)
 
-  //making a bunch of different points and momentum(s?) and adding them to the p- and mom-array
-  for (let s = 0; s <= 8; s += 1)
-  {
-    p[s] = {
-    x: 0 - (200 * s), 
-    y: 0
-    }
-  }
+  console.log(mass)
+  console.log(p)
 
   //making all the momentum object variables
-  for (let m = 0; m <= 8; m++)
+  for (let m = 1; m <= 8; m++)
   {
-    mom[m] = {x: 0, y: 35.305 * pow(0.8885, m)}
+    mom[m] = {x: 0, y: calculateSpeed(mass[m], -p[m].x)}
   }
+  mom[0] = {x:0, y:0}
+  
 
   //creating all the planets in the solar system and adding them to the planets-array
   {
-  planets.push(new Planet(10000, 70, p[0], mom[0], color(255, 214, 10), 'Solen'))
-  planets.push(new Planet(10, 10, p[1], mom[1], color(70),'Merkur'))  
-  planets.push(new Planet(10, 10, p[2], mom[2], color(255, 185, 23),'Venus'))
-  planets.push(new Planet(10, 10, p[3], mom[3], color(13, 56, 31),'Jorden'))
-  planets.push(new Planet(10, 10, p[4], mom[4], color(186, 100, 50),'Mars'))
-  planets.push(new Planet(10, 10, p[5], mom[5], color(186, 136, 50),'Jupiter'))  
-  planets.push(new Planet(10, 10, p[6], mom[6], color(224, 176, 92),'Saturn'))
-  planets.push(new Planet(10, 10, p[7], mom[7], color(83, 117, 117),'Uranus'))
-  planets.push(new Planet(10, 10, p[8], mom[8], color(11, 100, 217),'Neptun'))
+  planets.push(new Planet(mass[0], dia[0], p[0], mom[0], color(255, 214, 10), 'Solen'))
+  planets.push(new Planet(mass[1], dia[1], p[1], mom[1], color(70),'Merkur'))  
+  planets.push(new Planet(mass[2], dia[2], p[2], mom[2], color(255, 185, 23),'Venus'))
+  planets.push(new Planet(mass[3], dia[3], p[3], mom[3], color(13, 56, 31),'Jorden'))
+  planets.push(new Planet(mass[4], dia[4], p[4], mom[4], color(186, 100, 50),'Mars'))
+  planets.push(new Planet(mass[5], dia[5], p[5], mom[5], color(186, 136, 50),'Jupiter'))  
+  planets.push(new Planet(mass[6], dia[6], p[6], mom[6], color(224, 176, 92),'Saturn'))
+  planets.push(new Planet(mass[7], dia[7], p[7], mom[7], color(83, 117, 117),'Uranus'))
+  planets.push(new Planet(mass[8], dia[8], p[8], mom[8], color(11, 100, 217),'Neptun'))
   }
 
   {
-  pics.push(loadImage('Pics/solen.png'))
-  pics.push(loadImage('Pics/merkur.png'))
-  pics.push(loadImage('Pics/venus.png'))
-  pics.push(loadImage('Pics/jorden.png'))
-  pics.push(loadImage('Pics/mars.png'))
-  pics.push(loadImage('Pics/jupiter.png'))
-  pics.push(loadImage('Pics/saturn.png'))
-  pics.push(loadImage('Pics/uranus.png'))
-  pics.push(loadImage('Pics/neptune.png'))
-
-  planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/merkur.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/venus.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/jorden.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/mars.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/jupiter.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
-  planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
+    pics.push(loadImage('Pics/solen.png'))
+    pics.push(loadImage('Pics/merkur.png'))
+    pics.push(loadImage('Pics/venus.png'))
+    pics.push(loadImage('Pics/jorden.png'))
+    pics.push(loadImage('Pics/mars.png'))
+    pics.push(loadImage('Pics/jupiter.png'))
+    pics.push(loadImage('Pics/saturn.png'))
+    pics.push(loadImage('Pics/uranus.png'))
+    pics.push(loadImage('Pics/neptune.png'))
+  
+    planetDescriptions.push(loadStrings('PlanetDescriptions/sun.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/merkur.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/venus.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/jorden.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/mars.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/jupiter.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/saturn.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/uranus.txt'))
+    planetDescriptions.push(loadStrings('PlanetDescriptions/neptun.txt'))
   }
 
   //creates the sidebar
@@ -137,7 +170,7 @@ function draw()
 
   Sidebar.showSidebar(planetDescriptions, planets);
 
-  this.speedSlider.slider(0, 2, deltaTime, "x")
+  this.speedSlider.slider(0, 10, deltaTime, "x")
   deltaTime = this.speedSlider.slidervalue()
 
   restart()

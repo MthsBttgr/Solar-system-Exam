@@ -74,7 +74,7 @@ class sidebar
         this.descrButton = new ScreenElements(width - this.sidebarWidth + 10, height - 50, this.sidebarWidth - 20, 30, 10, "Deskription")
 
         //creates slider for manipulating mass
-        this.massSlider = new ScreenElements(width - this.sidebarWidth + 35, height - 100, this.sidebarWidth - 110, 6, 12, "masse")
+        //this.massSlider = new ScreenElements(width - this.sidebarWidth + 35, height - 100, this.sidebarWidth - 110, 6, 12, "masse")
     }
 
     //draws the sidebar
@@ -130,7 +130,7 @@ class sidebar
     {   
         for(let p = 0; p < planeter.length; p++)
         {
-            this.list[p].showList(planeter[p].name, planeter[p].color, this.descrButton.mouseoverRECT(), this.massSlider.mouseovercircle())
+            this.list[p].showList(planeter[p].name, planeter[p].color, this.descrButton.mouseoverRECT())
         }
 
         for(let p = 0; p <= 8; p++)
@@ -138,8 +138,8 @@ class sidebar
             this.state = this.list[p].returnState()
             if(this.state === p)
             {
-                this.massSlider.slider(1, 20000, planeter[p].mass, "kg")
-                planeter[p].mass = this.massSlider.slidervalue()
+                //this.massSlider.slider(1, 20000, planeter[p].mass, "kg")
+                //planeter[p].mass = this.massSlider.slidervalue()
             } 
         }
     }

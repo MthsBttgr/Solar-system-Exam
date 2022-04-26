@@ -35,6 +35,12 @@ function calculateplacement(loc1, loc2, index1, index2)
   return dddd
 }
 
+function calculateSpeed(masse, radius)
+{
+  let deez = masse * sqrt((G * masse * 1000) / (radius))
+  return deez
+}
+
 // changes the scale variable when turning the mousewheel when mouse is in "space"
 // scrolls up and down in sidebar when turning the mousewheel when the mouse is in the sidebar
 // inputs the mousewheel event, when the mousewheel is turned
@@ -86,6 +92,7 @@ function startScreen()
   }
 }
 
+//creates restart button
 function restart()
 {
   let restart = new ScreenElements((width - sidebarW)/2, 0, 50, 30, 5, "reset")
@@ -93,21 +100,25 @@ function restart()
 
   if (restart.selected)
   {
-    for (let s = 0; s <= 8; s += 1)
-    {
-      p[s] = {
-      x: 0 - (200 * s), 
-      y: 0
-      }
-    }
+    noLoop()
+    p = [
+      {x: 0, y: 0},
+      {x: -57900000, y: 0}, 
+      {x: -108000000, y: 0}, 
+      {x: -149600000, y: 0}, 
+      {x: -228000000, y: 0}, 
+      {x: -778000000, y: 0}, 
+      {x: -1434000000, y: 0}, 
+      {x: -2872000000, y: 0}, 
+      {x: -4495000000, y: 0}
+    ]
+    
 
-    //making all the momentum object variables
-    for (let m = 0; m <= 8; m++)
+    for (let m = 1; m <= 8; m++)
     {
-      planets[m].momentum = {x: 0, y: 35.305 * pow(0.8885, m)}
-      planets[m].mass = 10
+      planets[m].momentum = {x: 0, y: calculateSpeed(mass[m], -p[m].x)}
     }
-
-    planets[0].mass = 10000
+    planets[0].momentum = {x:0, y:0}
+    loop()
   }
 }
