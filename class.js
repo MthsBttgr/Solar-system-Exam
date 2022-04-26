@@ -71,7 +71,7 @@ class sidebar
         this.listColor;
 
         //creates button for description
-        this.descrButton = new ScreenElements(width - this.sidebarWidth + 10, height - 50, this.sidebarWidth - 20, 30, 10, "Deskription")
+        this.descrButton = new ScreenElements(width - this.sidebarWidth + 10, height - 50, this.sidebarWidth - 20, 30, 10, "Beskrivelse")
 
         //creates slider for manipulating mass
         this.massSlider = new ScreenElements(width - this.sidebarWidth + 35, height - 100, this.sidebarWidth - 110, 6, 12, "masse")
