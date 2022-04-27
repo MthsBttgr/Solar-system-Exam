@@ -3,6 +3,8 @@ const G = 1;
 
 //making the time difference every frame
 let deltaTime = 1;
+let deltaX;
+let deltaY;
 
 //setting up arrays for objects and values
 let planets = [];
@@ -122,8 +124,8 @@ function draw()
     // U can move the screen by pressing a mousebutton
     if (mouseIsPressed && mouseX < width - sidebarW && !speedSlider.mouseovercircle())
     {
-      let deltaX = mouseX - pwinMouseX
-      let deltaY = mouseY - pwinMouseY
+      deltaX = mouseX - pwinMouseX
+      deltaY = mouseY - pwinMouseY
       
       for (let i = 0; i <= 8; i++)
       {
@@ -135,7 +137,7 @@ function draw()
     // shows all planets in array
     for (let s = 0; s <= 8; s++)
     {
-      planets[s].showPlanet(p[s], scale)
+      planets[s].showPlanet(p[s], scale, deltaX, deltaY)
     }
   }
   pop()

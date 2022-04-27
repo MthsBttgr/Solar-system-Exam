@@ -9,6 +9,10 @@ class Planet
         this.momentum = momentum;
         this.force;
 
+        this.trail = []
+        this.deltaX;
+        this.deltaY;
+
         this.d;
 
         this.color = color;
@@ -30,7 +34,32 @@ class Planet
 
         textAlign(CENTER)
         textSize(15)
-        text(this.name, this.position.x * this.scale, this.position.y * this.scale + this.radius * this.scale  + 20)
+        text(this.name, this.position.x * this.scale, (this.position.y + this.radius) * this.scale  + 20)
+
+        this.trail.push([this.position.x, this.position.y])
+
+        stroke(this.color)
+        
+        for (let d = 1; d <= this.trail.length - 1; d++)
+        {
+            this.trail[d][0] += mouseX - pwinMouseX
+            this.trail[d][1] += mouseY - pwinMouseY
+            
+        }
+
+        if(this.trail.length > 20)
+        {
+            for (let t = 0; t <= this.trail.length - 2; t++)
+            {
+                strokeWeight(t / this.radius * scale)
+                line(this.trail[t][0] * this.scale, this.trail[t][1] * this.scale, this.trail[t+1][0] * this.scale, this.trail[t+1][1] * this.scale)
+            }
+        }
+
+        if(this.trail.length > 100)
+        {
+            this.trail.splice(0,1);
+        }        
     }
 }
 
@@ -249,6 +278,8 @@ class ScreenElements
 
         this.selected = false;
 
+        this.mouseIsDown = false;
+
         this.deltaXcircle1 = 0;
         this.xCircle;
         this.yCircle = this.y
@@ -279,12 +310,20 @@ class ScreenElements
         text(this.tekst, this.x + this.width / 2, this.y - 15)
 
         //moves the cirkle so it follows your mouse
-        if (mouseIsPressed && this.mouseovercircle())
+        if (mouseIsPressed && this.mouseovercircle() || this.mouseIsDown)
         {
             if (!clicked.isPlaying() && (this.xCircle > this.deltaXcircle1 + 10 || this.xCircle < this.deltaXcircle1 - 10))
             {
                 clicked.play(0, 1, 0.3);
                 this.deltaXcircle1 = this.xCircle;
+            }
+            if (mouseIsPressed)
+            {
+                this.mouseIsDown = true;
+            }
+            else 
+            {
+                this.mouseIsDown = false
             }
             this.xCircle = mouseX;
         }
@@ -312,7 +351,7 @@ class ScreenElements
     mouseovercircle()
     {
         this.d = dist(mouseX, mouseY, this.xCircle, this.yCircle + 3);
-        if(this.d < this.radius)
+        if(this.d < this.radius || this.mouseIsDown)
         {
             return true;
         }
