@@ -58,6 +58,7 @@ function setup()
   planets.push(new Planet(10, 10, p[8], mom[8], color(11, 100, 217),'Neptun'))
   }
 
+  //loading planet images, descriptions, and sounds
   {
   pics.push(loadImage('Pics/solen.png'))
   pics.push(loadImage('Pics/merkur.png'))
