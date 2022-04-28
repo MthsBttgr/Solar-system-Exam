@@ -71,6 +71,7 @@ function setup()
     mom[m] = {x: 0, y: calculateSpeed(mass[0], mass[m], -p[m].x)}
   }
   mom[0] = {x:0, y:0}
+  mom[1] = {x:0, y: 47.9 * mass[1]}
   
 
   //creating all the planets in the solar system and adding them to the planets-array
@@ -112,7 +113,7 @@ function setup()
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
-  speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
+  speedSlider = new ScreenElements(35,35,250,6,12,"speed:")
 }
 
 function draw() 

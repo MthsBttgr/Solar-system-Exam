@@ -45,7 +45,8 @@ function calculateSpeed(masse1, mass2, radius)
 
   console.log(deez)
 */
-  let deez = mass2 * 10 * sqrt((G * masse1) / (radius * 1000))
+  let deez = mass2 * sqrt(G * masse1 / (radius * 1000))
+  console.log(mass2 * sqrt(G * masse1 / (radius * 1000)))
   return deez
 }
 
