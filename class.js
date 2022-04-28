@@ -40,12 +40,14 @@ class Planet
 
         stroke(this.color)
         
+        /*
         for (let d = 1; d <= this.trail.length - 1; d++)
         {
             this.trail[d][0] += mouseX - pwinMouseX
             this.trail[d][1] += mouseY - pwinMouseY
             
         }
+        */
 
         if(this.trail.length > 20)
         {
