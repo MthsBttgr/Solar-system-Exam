@@ -10,10 +10,6 @@ class Planet
         this.force;
 
         this.trail = []
-        this.deltaX;
-        this.deltaY;
-
-        this.d;
 
         this.color = color;
 
