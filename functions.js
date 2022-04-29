@@ -7,7 +7,7 @@ function gravity(p1, p2, mass1, mass2)
   let distr = sqrt(pow(r.x,2) + pow(r.y,2))
   let rHat = {x: r.x / distr, y: r.y / distr}
   
-  let Fg = -G * (mass1 * mass2) / pow(distr, 2)
+  let Fg = -G * ((mass1 * mass2) / pow(distr, 2))
 
   let F = {x: Fg * rHat.x, y: Fg * rHat.y}
 
@@ -24,8 +24,8 @@ function calculateplacement(loc1, loc2, index1, index2)
   planets[index1].momentum.x += planets[index1].force.x * deltaTime
   planets[index1].momentum.y += planets[index1].force.y * deltaTime
 
-  let x = planets[index1].momentum.x / planets[index1].mass * deltaTime 
-  let y = planets[index1].momentum.y / planets[index1].mass * deltaTime 
+  let x = planets[index1].momentum.x / planets[index1].mass
+  let y = planets[index1].momentum.y / planets[index1].mass
 
   let dddd = {
   x: x, 
@@ -45,8 +45,8 @@ function calculateSpeed(masse1, mass2, radius)
 
   console.log(deez)
 */
-  let deez = mass2 * sqrt(G * masse1 / (radius * 1000))
-  console.log(mass2 * sqrt(G * masse1 / (radius * 1000)))
+  let deez = mass2 * sqrt((G * (masse1 + mass2) * 3) / (radius * 1000))
+  console.log(deez)
   return deez
 }
 
