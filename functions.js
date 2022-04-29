@@ -105,8 +105,11 @@ function restart()
     {
       planets[m].momentum = {x: 0, y: 35.305 * pow(0.8885, m)}
       planets[m].mass = 10
+      planets[m].trail = []
     }
 
     planets[0].mass = 10000
   }
+
+  reset.selected = false;
 }

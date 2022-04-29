@@ -88,9 +88,9 @@ function setup()
   Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
-  speedSlider = new ScreenElements(35,35,150,6,12,"speed:")
+  speedSlider = new ScreenElements(35,35,150,6,12,"Fart:")
 
-  reset = new ScreenElements((width - sidebarW)/2, 0, 50, 30, 5, "reset")
+  reset = new ScreenElements((width - sidebarW)/2, 0, 80, 30, 5, "Genstart")
 }
 
 function draw() 
