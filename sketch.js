@@ -85,7 +85,7 @@ function setup()
   }
 
   //creates the sidebar
-  Sidebar = new sidebar(sidebarW, color(50,50,50), planets);
+  sidebar = new Sidebar(sidebarW, color(50,50,50), planets);
 
   //creates sliders for manipulating parameters
   speedSlider = new ScreenElements(35,35,150,6,12,"Fart:")
@@ -143,7 +143,7 @@ function draw()
   }
   pop()
 
-  Sidebar.showSidebar(planetDescriptions, planets);
+  sidebar.showSidebar(planetDescriptions, planets);
 
   this.speedSlider.slider(0, 2, deltaTime, "x")
   deltaTime = this.speedSlider.slidervalue()

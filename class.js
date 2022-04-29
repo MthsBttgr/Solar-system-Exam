@@ -52,7 +52,7 @@ class Planet
     }
 }
 
-class sidebar
+class Sidebar
 {
     constructor(sidebarWidth, bgcolor, planeter)
     {
