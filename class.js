@@ -299,18 +299,23 @@ class ScreenElements
         fill(40);
         rect(this.x, this.y, this.width, 6, 3);
 
+        //colors the circle and plays sound based on mouse placement and events
         fill(150);
-        circle(this.xCircle, this.yCircle + 3, this.radius);
+        if (this.mouseovercircle())
+        {
+            fill(110);
+            if (this.playedClick = false)
+            {
+                click.play(0, 1, 0.3);
+                this.playedClick = true
+            }
+        }
+        else 
+        {
+            this.playedClick = false
+        }
 
-        fill(255)
-        textAlign(RIGHT,CENTER)
-        text(startValue + unit, this.x - 5, this.y + 3)
-        textAlign(LEFT,CENTER)
-        text(endValue + unit, this.x + this.width + 5, this.y + 3)
-        textAlign(CENTER,CENTER)
-        text(this.tekst, this.x + this.width / 2, this.y - 15)
-
-        //moves the cirkle so it follows your mouse
+        //moves the cirkle so it follows your mouse and plays sound based on mouse placement and events
         if (mouseIsPressed && this.mouseovercircle() || this.mouseIsDown)
         {
             if (!clicked.isPlaying() && (this.xCircle > this.deltaXcircle1 + 10 || this.xCircle < this.deltaXcircle1 - 10))
@@ -327,7 +332,18 @@ class ScreenElements
                 this.mouseIsDown = false
             }
             this.xCircle = mouseX;
+            fill(80);
         }
+        circle(this.xCircle, this.yCircle + 3, this.radius);
+
+        fill(255)
+        textAlign(RIGHT,CENTER)
+        text(startValue + unit, this.x - 5, this.y + 3)
+        textAlign(LEFT,CENTER)
+        text(endValue + unit, this.x + this.width + 5, this.y + 3)
+        textAlign(CENTER,CENTER)
+        text(this.tekst, this.x + this.width / 2, this.y - 15)
+
         //makes the circle stay within the slider
         if (this.xCircle < this.x)
         {
