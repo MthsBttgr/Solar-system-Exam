@@ -104,8 +104,6 @@ class sidebar
         this.preview()
         this.planetList(planetArray)
 
-        this.descrButton.button()
-
         if (this.descrButton.isSelected())
         {
             fill(0,0,0, 200)
@@ -158,6 +156,7 @@ class sidebar
             {
                 this.massSlider.slider(1, 20000, planeter[p].mass, "kg")
                 planeter[p].mass = this.massSlider.slidervalue()
+                this.descrButton.button()
             } 
         }
     }

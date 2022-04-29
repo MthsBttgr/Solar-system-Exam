@@ -75,9 +75,9 @@ function startScreen()
     textAlign(CENTER, CENTER)
     fill(255)
     textSize(50)
-    text("DISCLAIMER:", width / 2, height / 2 - 50)
+    text("Ansvarsfraskrivelse:", width / 2, height / 2 - 50)
     textSize(20)
-    text("Dette spil er ikke en akkurat repræsentation af solsystemet", width / 2, height / 2 + 15)
+    text("Dette spil er ikke en akkurat repræsentation af solsystemet \n Spillet er ment til underholdning for små børn", width / 2, height / 2 + 15)
 
     if (mouseIsPressed)
     {
