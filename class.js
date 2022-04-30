@@ -319,6 +319,17 @@ class ScreenElements
                 this.mouseIsDown = false
             }
             this.xCircle = mouseX;
+            
+            //makes the circle stay within the slider
+            if (this.xCircle < this.x)
+            {
+                this.xCircle = this.x;
+            }
+            if (this.xCircle > (this.x + this.width))
+            {
+                this.xCircle = this.x + this.width;
+            }
+
             fill(80);
         }
         circle(this.xCircle, this.yCircle + 3, this.radius);
@@ -331,16 +342,8 @@ class ScreenElements
         textAlign(CENTER,CENTER)
         text(this.tekst, this.x + this.width / 2, this.y - 15)
 
-        //makes the circle stay within the slider
-        if (this.xCircle < this.x)
-        {
-            this.xCircle = this.x;
-        }
-        if (this.xCircle > (this.x + this.width))
-        {
-            this.xCircle = this.x + this.width;
-        }
 
+        
         //assigns the mapped value of the circle's x-value to a variable
         this.returnvalue = map(this.xCircle,this.x,this.x + this.width, startValue, endValue);
     }
