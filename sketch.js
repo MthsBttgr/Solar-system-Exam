@@ -103,20 +103,24 @@ function draw()
     //making sure the center of the canvas is always at the center of the screen
     translate((width - sidebarW)/2, height/2)
 
-    // calculates the force excuded on all bodies excuded by all bodies, and add the result to the placement of all bodies
+    // calculates the force excuded on all bodies by all bodies, and add the result to the placement of all bodies
     for (let i = 0; i <= 8; i++)
     {
       for (let o = 0; o <= 7; o++)
       {
+        //makes sure a planet doesnt simulate the force excuded on itself by itself
         if (i === o)
         {
-          if (o === 9)
+          if (o === 8)
           {
             break
-          } else {
+          } 
+          else 
+          {
             o++
           } 
         }
+
         p[i].x += calculateplacement(p[i],p[o],i,o).x
         p[i].y += calculateplacement(p[i],p[o],i,o).y
       }
@@ -134,6 +138,11 @@ function draw()
         p[i].y += deltaY / scale;
       }
     }
+    else
+      {
+        deltaX = 0
+        deltaY = 0
+      }
 
     // shows all planets in array
     for (let s = 0; s <= 8; s++)
@@ -143,11 +152,15 @@ function draw()
   }
   pop()
 
+  //dras the sidebar
   sidebar.showSidebar(planetDescriptions, planets);
 
+  //draws a slider that manipulates the variable deltaTime
   this.speedSlider.slider(0, 2, deltaTime, "x")
   deltaTime = this.speedSlider.slidervalue()
 
+  //makes a restart button
   restart()
+  //draws the startscreen
   startScreen()
 }

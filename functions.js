@@ -16,7 +16,7 @@ function gravity(p1, p2, mass1, mass2)
 
 // calculates placement based on the force of gravity
 // inputs two points and two indexes for the planets-array
-// returns the amount a planet should move as an object, dddd, with an x- and a y-component, representing a vector
+// returns the amount a planet should move as an object, dddd, with an x- and a y-component representing a vector
 function calculateplacement(loc1, loc2, index1, index2)
 {
   planets[index1].force = gravity(loc1, loc2, planets[index1].mass, planets[index2].mass)

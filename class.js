@@ -40,6 +40,10 @@ class Planet
         {
             for (let t = 0; t <= this.trail.length - 2; t++)
             {
+                //changes position of the trails when moving the screen
+                this.trail[t][0] += deltaX / this.scale
+                this.trail[t][1] += deltaY / this.scale
+
                 strokeWeight(t / this.radius * scale)
                 line(this.trail[t][0] * this.scale, this.trail[t][1] * this.scale, this.trail[t+1][0] * this.scale, this.trail[t+1][1] * this.scale)
             }
