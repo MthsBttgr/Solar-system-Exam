@@ -1,10 +1,10 @@
 class Planet
 {
-    constructor(mass, radius, position, momentum, color, name)
+    constructor(mass, diameter, position, momentum, color, name)
     {
         //sets properties for the planet
         this.mass = mass;
-        this.radius = radius;
+        this.diameter = diameter;
         this.position = position;
         this.momentum = momentum;
         this.force;
@@ -26,11 +26,11 @@ class Planet
         this.position = position;
         this.scale = scale;
 
-        circle(this.position.x * this.scale, this.position.y * this.scale, this.radius * this.scale)
+        circle(this.position.x * this.scale, this.position.y * this.scale, this.diameter * this.scale)
 
         textAlign(CENTER)
         textSize(15)
-        text(this.name, this.position.x * this.scale, (this.position.y + this.radius) * this.scale  + 20)
+        text(this.name, this.position.x * this.scale, (this.position.y + this.diameter) * this.scale  + 20)
 
         this.trail.push([this.position.x, this.position.y])
 
@@ -44,7 +44,7 @@ class Planet
                 this.trail[t][0] += deltaX / this.scale
                 this.trail[t][1] += deltaY / this.scale
 
-                strokeWeight(t / this.radius * scale)
+                strokeWeight(t / this.diameter * scale)
                 line(this.trail[t][0] * this.scale, this.trail[t][1] * this.scale, this.trail[t+1][0] * this.scale, this.trail[t+1][1] * this.scale)
             }
         }
@@ -253,13 +253,13 @@ class PlanetList
 
 class ScreenElements
 {
-    constructor(x, y, Width, Height, radius, tekst)
+    constructor(x, y, Width, Height, diameter, tekst)
     {
         this.x = x;
         this.y = y;
         this.width = Width;
         this.height = Height;
-        this.radius = radius;
+        this.diameter = diameter;
 
         this.basecol = color(40)
         this.mouseOverCol = color(30)
@@ -295,7 +295,7 @@ class ScreenElements
         if (this.mouseovercircle())
         {
             fill(110);
-            if (this.playedClick = false)
+            if (this.playedClick === false)
             {
                 click.play(0, 1, 0.3);
                 this.playedClick = true
@@ -336,7 +336,7 @@ class ScreenElements
 
             fill(80);
         }
-        circle(this.xCircle, this.yCircle + 3, this.radius);
+        circle(this.xCircle, this.yCircle + 3, this.diameter);
 
         fill(255)
         textAlign(RIGHT,CENTER)
@@ -362,7 +362,7 @@ class ScreenElements
     mouseovercircle()
     {
         this.d = dist(mouseX, mouseY, this.xCircle, this.yCircle + 3);
-        if(this.d < this.radius || this.mouseIsDown)
+        if(this.d < this.diameter || this.mouseIsDown)
         {
             return true;
         }
@@ -403,7 +403,7 @@ class ScreenElements
             fill(this.basecol)
         }
 
-        rect(this.x, this.y, this.width, this.height, this.radius)
+        rect(this.x, this.y, this.width, this.height, this.diameter)
         fill(255)
         textAlign(CENTER, CENTER)
         text(this.tekst, this.x + this.width / 2, this.y + this.height / 2)
@@ -414,7 +414,7 @@ class ScreenElements
     {
         if(mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height)
         {
-            if(this.playedClick === false)
+            if(!this.playedClick && !this.selected)
             {
                 click.play(0, 1, 0.2)
                 this.playedClick = true;
