@@ -157,7 +157,7 @@ function draw()
   sidebar.showSidebar(planetDescriptions, planets);
 
   //draws a slider that manipulates the variable deltaTime
-  this.speedSlider.slider(0, 10, deltaTime, "x");
+  this.speedSlider.slider(0, 2, deltaTime, "x");
   deltaTime = this.speedSlider.slidervalue();
 
   //makes a restart button
